@@ -2,19 +2,19 @@ import type { Metadata } from 'next';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: '__PROJECT_NAME__ — __PROJECT_DESCRIPTION__',
-  description: '__PROJECT_DESCRIPTION_LONG__',
+  title: 'glimpse — GitHub-style git diff viewer CLI',
+  description: 'Browser-based, GitHub-style diff viewer for git changes. View uncommitted changes, branch comparisons, commit ranges, and more with syntax-highlighted split diffs.',
   openGraph: {
-    title: '__PROJECT_NAME__ — __PROJECT_DESCRIPTION__',
-    description: '__PROJECT_DESCRIPTION_LONG__',
-    url: 'https://__PROJECT_NAME__.dotbrains.io',
-    siteName: '__PROJECT_NAME__',
+    title: 'glimpse — GitHub-style git diff viewer CLI',
+    description: 'Browser-based, GitHub-style diff viewer for git changes. View uncommitted changes, branch comparisons, commit ranges, and more with syntax-highlighted split diffs.',
+    url: 'https://glimpse.dotbrains.io',
+    siteName: 'glimpse',
     images: [
       {
         url: '/og-image.svg',
         width: 1200,
         height: 630,
-        alt: '__PROJECT_NAME__ — __PROJECT_DESCRIPTION__',
+        alt: 'glimpse — GitHub-style git diff viewer CLI',
       },
     ],
     locale: 'en_US',
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '__PROJECT_NAME__ — __PROJECT_DESCRIPTION__',
-    description: '__PROJECT_DESCRIPTION_LONG__',
+    title: 'glimpse — GitHub-style git diff viewer CLI',
+    description: 'Browser-based, GitHub-style diff viewer for git changes. View uncommitted changes, branch comparisons, commit ranges, and more with syntax-highlighted split diffs.',
     images: ['/og-image.svg'],
   },
   icons: {

@@ -1,9 +1,9 @@
-# __PROJECT_NAME__ — __PROJECT_DESCRIPTION__
+# glimpse — GitHub-style git diff viewer CLI
 
-![__PROJECT_NAME__](./assets/og-image.svg)
+![glimpse](./assets/og-image.svg)
 
-[![CI](https://github.com/dotbrains/__PROJECT_NAME__/actions/workflows/ci.yml/badge.svg)](https://github.com/dotbrains/__PROJECT_NAME__/actions/workflows/ci.yml)
-[![Release](https://github.com/dotbrains/__PROJECT_NAME__/actions/workflows/release.yml/badge.svg)](https://github.com/dotbrains/__PROJECT_NAME__/actions/workflows/release.yml)
+[![CI](https://github.com/dotbrains/glimpse/actions/workflows/ci.yml/badge.svg)](https://github.com/dotbrains/glimpse/actions/workflows/ci.yml)
+[![Release](https://github.com/dotbrains/glimpse/actions/workflows/release.yml/badge.svg)](https://github.com/dotbrains/glimpse/actions/workflows/release.yml)
 [![License: PolyForm Shield 1.0.0](https://img.shields.io/badge/License-PolyForm%20Shield%201.0.0-blue.svg)](https://polyformproject.org/licenses/shield/1.0.0/)
 
 ![Go](https://img.shields.io/badge/-Go-00ADD8?style=flat-square&logo=go&logoColor=white)
@@ -11,7 +11,7 @@
 ![macOS](https://img.shields.io/badge/-macOS-000000?style=flat-square&logo=apple&logoColor=white)
 ![Linux](https://img.shields.io/badge/-Linux-FCC624?style=flat-square&logo=linux&logoColor=black)
 
-__PROJECT_DESCRIPTION_LONG__
+Browser-based, GitHub-style diff viewer for git changes. View uncommitted changes, branch comparisons, commit ranges, and more with syntax-highlighted split diffs.
 
 ## Problem
 
@@ -19,7 +19,7 @@ __PROJECT_DESCRIPTION_LONG__
 
 ## Configuration
 
-`__PROJECT_NAME__` reads its configuration from `~/.config/__PROJECT_NAME__/config.yaml`. If the file does not exist, built-in defaults are used.
+`glimpse` reads its configuration from `~/.config/glimpse/config.yaml`. If the file does not exist, built-in defaults are used.
 
 ### Config file format
 
@@ -34,13 +34,13 @@ __PROJECT_DESCRIPTION_LONG__
 #     model: opus
 ```
 
-### `__PROJECT_NAME__ config init`
+### `glimpse config init`
 
 Scaffolds a config file with the built-in defaults:
 
 ```
-$ __PROJECT_NAME__ config init
-✓ Wrote default config to ~/.config/__PROJECT_NAME__/config.yaml
+$ glimpse config init
+✓ Wrote default config to ~/.config/glimpse/config.yaml
 Edit the file to customize settings.
 ```
 
@@ -48,7 +48,7 @@ Refuses to overwrite an existing file unless `--force` is passed.
 
 ## Commands
 
-### `__PROJECT_NAME__`
+### `glimpse`
 
 <!-- Describe the main command behavior here. -->
 
@@ -58,7 +58,7 @@ Steps:
 3. Step three.
 
 ```
-$ __PROJECT_NAME__
+$ glimpse
 → output example here
 ```
 

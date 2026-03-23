@@ -27,7 +27,7 @@ func ConfigDir() (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("unable to determine home directory: %w", err)
 	}
-	return filepath.Join(home, ".config", "__PROJECT_NAME__"), nil
+	return filepath.Join(home, ".config", "glimpse"), nil
 }
 
 // ConfigPath returns the full path to the config file.

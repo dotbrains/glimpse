@@ -1,7 +1,7 @@
 {
-  "name": "@__PROJECT_NAME__/website",
+  "name": "@glimpse/website",
   "version": "0.1.0",
-  "description": "Marketing website for __PROJECT_NAME__ — __PROJECT_DESCRIPTION__",
+  "description": "Marketing website for glimpse — GitHub-style git diff viewer CLI",
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",

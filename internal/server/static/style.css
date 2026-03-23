@@ -1,0 +1,36 @@
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#0d1117;color:#e6edf3;font-size:14px}
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;background:#161b22;border-bottom:1px solid #30363d;position:sticky;top:0;z-index:100}
+.header-left{display:flex;align-items:center;gap:12px}
+h1{font-size:16px;font-weight:600;color:#58a6ff}
+.badge{background:#21262d;border:1px solid #30363d;border-radius:6px;padding:2px 8px;font-size:12px;color:#8b949e}
+.badge.ref{color:#58a6ff}
+.summary{font-size:12px;color:#8b949e}
+nav{background:#161b22;border-bottom:1px solid #30363d;padding:8px 24px;display:flex;flex-wrap:wrap;gap:4px}
+nav a{color:#58a6ff;text-decoration:none;font-size:12px;padding:4px 8px;border-radius:4px;display:inline-flex;align-items:center;gap:6px}
+nav a:hover{background:#21262d}
+.file-stat{font-size:11px;color:#8b949e}
+.file-stat .add{color:#3fb950}
+.file-stat .del{color:#f85149}
+.file-card{margin:16px 24px;border:1px solid #30363d;border-radius:6px;overflow:hidden}
+.file-header{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;background:#161b22;border-bottom:1px solid #30363d;font-size:13px;font-weight:500}
+.file-header .path{color:#e6edf3}
+.file-header .stats{font-size:12px;color:#8b949e;display:flex;gap:8px}
+.file-header .stats .add{color:#3fb950}
+.file-header .stats .del{color:#f85149}
+.status-badge{font-size:10px;font-weight:600;padding:1px 6px;border-radius:3px;text-transform:uppercase;margin-right:8px}
+.status-badge.added{background:#238636;color:#fff}
+.status-badge.deleted{background:#da3633;color:#fff}
+.status-badge.renamed{background:#1f6feb;color:#fff}
+.diff-table{width:100%;border-collapse:collapse;font-family:'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace;font-size:12px;line-height:20px;table-layout:fixed}
+.diff-table td{padding:0 8px;white-space:pre;overflow:hidden;text-overflow:ellipsis;vertical-align:top}
+.diff-table .line-num{width:50px;min-width:50px;text-align:right;color:#484f58;user-select:none;padding-right:12px;border-right:1px solid #30363d}
+.diff-table .line-content{padding-left:12px}
+.diff-table tr.added{background:rgba(63,185,80,0.15)}
+.diff-table tr.added .line-content{color:#aff5b4}
+.diff-table tr.removed{background:rgba(248,81,73,0.15)}
+.diff-table tr.removed .line-content{color:#ffa198}
+.diff-table tr.context{background:transparent}
+.diff-table tr.hunk-header{background:#161b22}
+.diff-table tr.hunk-header td{color:#58a6ff;padding:4px 8px;font-style:italic}
+.empty{text-align:center;padding:48px;color:#484f58;font-size:16px}

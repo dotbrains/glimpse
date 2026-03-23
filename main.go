@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/dotbrains/__PROJECT_NAME__/cmd"
+	"github.com/dotbrains/glimpse/cmd"
 )
 
 var version = "dev"

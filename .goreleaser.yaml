@@ -1,7 +1,7 @@
 version: 2
 
 builds:
-  - binary: __PROJECT_NAME__
+  - binary: glimpse
     goos: [darwin, linux]
     goarch: [amd64, arm64]
     ldflags:
@@ -12,16 +12,16 @@ homebrew_casks:
       owner: dotbrains
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
-    name: __PROJECT_NAME__
-    homepage: https://github.com/dotbrains/__PROJECT_NAME__
-    description: "__PROJECT_DESCRIPTION__"
+    name: glimpse
+    homepage: https://github.com/dotbrains/glimpse
+    description: "GitHub-style git diff viewer CLI"
     license: "PolyForm Shield 1.0.0"
-    binaries: [__PROJECT_NAME__]
+    binaries: [glimpse]
     hooks:
       post:
         install: |
           if OS.mac?
-            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/__PROJECT_NAME__"]
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/glimpse"]
           end
 
 archives:

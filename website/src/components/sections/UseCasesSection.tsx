@@ -28,7 +28,7 @@ export function UseCasesSection() {
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-cream mb-3 sm:mb-4">Use Cases</h2>
           <p className="text-cream/70 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto">
-            __PROJECT_NAME__ adapts to how your team works
+            glimpse adapts to how your team works
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">

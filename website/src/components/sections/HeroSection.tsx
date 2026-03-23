@@ -27,14 +27,14 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
             <span className="text-gradient drop-shadow-md">One Command</span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-cream/70 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto px-4">
-            __PROJECT_DESCRIPTION_LONG__
+            Browser-based, GitHub-style diff viewer for git changes. View uncommitted changes, branch comparisons, commit ranges, and more with syntax-highlighted split diffs.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
             <a href="/#quick-start" className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-accent-primary to-accent-secondary hover:from-accent-secondary hover:to-accent-tertiary text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-lg shadow-lg shadow-accent-primary/30 transition-all">
               <Terminal className="w-4 h-4 sm:w-5 sm:h-5" />
               Get Started
             </a>
-            <a href="https://github.com/dotbrains/__PROJECT_NAME__" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-dark-gray hover:bg-dark-slate text-cream px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-lg border border-accent-primary hover:border-accent-secondary transition-all">
+            <a href="https://github.com/dotbrains/glimpse" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-dark-gray hover:bg-dark-slate text-cream px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-lg border border-accent-primary hover:border-accent-secondary transition-all">
               <Github className="w-4 h-4 sm:w-5 sm:h-5" />
               View on GitHub
             </a>

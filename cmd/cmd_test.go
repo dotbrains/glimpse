@@ -9,7 +9,7 @@ import (
 )
 
 func TestExecute_Version(t *testing.T) {
-	os.Args = []string{"__PROJECT_NAME__", "--version"}
+	os.Args = []string{"glimpse", "--version"}
 	err := Execute("0.0.1-test")
 	if err != nil {
 		t.Fatalf("Execute returned error: %v", err)
@@ -18,7 +18,7 @@ func TestExecute_Version(t *testing.T) {
 
 func TestNewRootCmd(t *testing.T) {
 	root := newRootCmd("0.1.0")
-	if root.Use != "__PROJECT_NAME__" {
+	if root.Use != "glimpse [ref] [ref]" {
 		t.Errorf("Use = %q", root.Use)
 	}
 
@@ -27,7 +27,7 @@ func TestNewRootCmd(t *testing.T) {
 	for _, c := range root.Commands() {
 		cmds[c.Name()] = true
 	}
-	for _, want := range []string{"config"} {
+	for _, want := range []string{"config", "list"} {
 		if !cmds[want] {
 			t.Errorf("missing subcommand %q", want)
 		}
@@ -52,7 +52,7 @@ func TestExecute_Help(t *testing.T) {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	output := out.String()
-	if !strings.Contains(output, "__PROJECT_NAME__") {
+	if !strings.Contains(output, "glimpse") {
 		t.Error("expected project name in help output")
 	}
 	if !strings.Contains(output, "config") {
@@ -74,7 +74,7 @@ func TestRunConfigInit(t *testing.T) {
 	}
 
 	// Config file should exist.
-	configPath := filepath.Join(tmp, ".config", "__PROJECT_NAME__", "config.yaml")
+	configPath := filepath.Join(tmp, ".config", "glimpse", "config.yaml")
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		t.Error("config file not created")
 	}
@@ -89,7 +89,7 @@ func TestRunConfigInit_AlreadyExists(t *testing.T) {
 	t.Setenv("HOME", tmp)
 
 	// Pre-create config.
-	configDir := filepath.Join(tmp, ".config", "__PROJECT_NAME__")
+	configDir := filepath.Join(tmp, ".config", "glimpse")
 	if err := os.MkdirAll(configDir, 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -113,7 +113,7 @@ func TestRunConfigInit_Force(t *testing.T) {
 	t.Setenv("HOME", tmp)
 
 	// Pre-create config.
-	configDir := filepath.Join(tmp, ".config", "__PROJECT_NAME__")
+	configDir := filepath.Join(tmp, ".config", "glimpse")
 	if err := os.MkdirAll(configDir, 0o755); err != nil {
 		t.Fatal(err)
 	}

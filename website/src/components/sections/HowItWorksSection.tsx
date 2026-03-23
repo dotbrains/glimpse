@@ -8,7 +8,7 @@ export function HowItWorksSection() {
     {
       icon: <Download className="w-8 h-8" />,
       step: '1',
-      title: 'Install __PROJECT_NAME__',
+      title: 'Install glimpse',
       description: 'Install via go install, Homebrew, or download a prebuilt binary from GitHub Releases. Single binary, zero runtime dependencies.',
     },
     {

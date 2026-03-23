@@ -9,12 +9,12 @@ export function CodeExamplesSection() {
   // TODO: Replace with your project's code examples.
   const examples = {
     basic: `# Basic usage
-$ __PROJECT_NAME__
+$ glimpse
 → output example here
 
 # With options
-$ __PROJECT_NAME__ --verbose`,
-    config: `# ~/.config/__PROJECT_NAME__/config.yaml
+$ glimpse --verbose`,
+    config: `# ~/.config/glimpse/config.yaml
 # Add your config example here`,
   };
 
@@ -29,7 +29,7 @@ $ __PROJECT_NAME__ --verbose`,
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-cream mb-3 sm:mb-4">Code Examples</h2>
           <p className="text-cream/70 text-base sm:text-lg lg:text-xl max-w-3xl mx-auto">
-            See __PROJECT_NAME__ in action
+            See glimpse in action
           </p>
         </div>
         <div className="bg-dark-slate border border-accent-primary/30 rounded-xl overflow-hidden">

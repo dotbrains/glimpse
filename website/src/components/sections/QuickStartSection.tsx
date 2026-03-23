@@ -6,15 +6,15 @@ import { CodeBlock } from '@/components/CodeBlock';
 export function QuickStartSection() {
   const [installMethod, setInstallMethod] = useState<'go' | 'brew' | 'release'>('go');
 
-  const goExample = `go install github.com/dotbrains/__PROJECT_NAME__@latest`;
+  const goExample = `go install github.com/dotbrains/glimpse@latest`;
 
   const brewExample = `brew tap dotbrains/tap
-brew install --cask __PROJECT_NAME__`;
+brew install --cask glimpse`;
 
   const releaseExample = `# macOS Apple Silicon
-gh release download --repo dotbrains/__PROJECT_NAME__ \\
-  --pattern '__PROJECT_NAME___darwin_arm64.tar.gz' --dir /tmp
-tar -xzf /tmp/__PROJECT_NAME___darwin_arm64.tar.gz -C /usr/local/bin`;
+gh release download --repo dotbrains/glimpse \\
+  --pattern 'glimpse_darwin_arm64.tar.gz' --dir /tmp
+tar -xzf /tmp/glimpse_darwin_arm64.tar.gz -C /usr/local/bin`;
 
   const installExamples = { go: goExample, brew: brewExample, release: releaseExample };
 
@@ -24,7 +24,7 @@ tar -xzf /tmp/__PROJECT_NAME___darwin_arm64.tar.gz -C /usr/local/bin`;
         <div className="text-center mb-10 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-cream mb-3 sm:mb-4">Quick Start</h2>
           <p className="text-slate-gray text-base sm:text-lg lg:text-xl max-w-3xl mx-auto">
-            Install __PROJECT_NAME__ and get started in under a minute
+            Install glimpse and get started in under a minute
           </p>
         </div>
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
@@ -55,19 +55,19 @@ tar -xzf /tmp/__PROJECT_NAME___darwin_arm64.tar.gz -C /usr/local/bin`;
             <h3 className="text-xl sm:text-2xl font-bold text-cream mb-4 sm:mb-6">2. Use</h3>
             {/* TODO: Replace with your project's usage examples */}
             <CodeBlock
-              code={`# Run __PROJECT_NAME__
-__PROJECT_NAME__
+              code={`# Run glimpse
+glimpse
 
 # Initialize config
-__PROJECT_NAME__ config init
+glimpse config init
 
 # Show version
-__PROJECT_NAME__ --version`}
+glimpse --version`}
               language="bash"
             />
             <div className="mt-6 bg-accent-primary/10 border border-accent-primary/30 rounded-lg p-4 sm:p-5">
               <p className="text-cream text-sm leading-relaxed">
-                <span className="text-accent-primary font-semibold">Tip:</span> Run <code className="bg-dark-slate/80 px-2 py-1 rounded text-accent-tertiary font-mono text-xs">__PROJECT_NAME__ config init</code> to scaffold a config file.
+                <span className="text-accent-primary font-semibold">Tip:</span> Run <code className="bg-dark-slate/80 px-2 py-1 rounded text-accent-tertiary font-mono text-xs">glimpse config init</code> to scaffold a config file.
               </p>
             </div>
           </div>

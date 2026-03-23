@@ -62,4 +62,4 @@ jobs:
           go-version-file: go.mod
 
       - name: Build
-        run: go build -o __PROJECT_NAME__ .
+        run: go build -o glimpse .

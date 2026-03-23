@@ -21,7 +21,7 @@ func TestConfigDir(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ConfigDir error: %v", err)
 	}
-	if dir != filepath.Join(tmp, ".config", "__PROJECT_NAME__") {
+	if dir != filepath.Join(tmp, ".config", "glimpse") {
 		t.Errorf("ConfigDir = %q", dir)
 	}
 }
@@ -34,7 +34,7 @@ func TestConfigPath(t *testing.T) {
 	if err != nil {
 		t.Fatalf("ConfigPath error: %v", err)
 	}
-	expected := filepath.Join(tmp, ".config", "__PROJECT_NAME__", "config.yaml")
+	expected := filepath.Join(tmp, ".config", "glimpse", "config.yaml")
 	if path != expected {
 		t.Errorf("ConfigPath = %q, want %q", path, expected)
 	}
