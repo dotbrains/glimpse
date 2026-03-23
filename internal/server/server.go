@@ -41,7 +41,7 @@ func (s *Server) ListenAndServe() error {
 	mux.HandleFunc("/api/diff", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Header().Set("Access-Control-Allow-Origin", "*")
-		json.NewEncoder(w).Encode(s.Data)
+		_ = json.NewEncoder(w).Encode(s.Data)
 	})
 
 	// Static files.

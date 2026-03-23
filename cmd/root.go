@@ -225,7 +225,7 @@ func openBrowser(url string) {
 	default:
 		return
 	}
-	exec.Command(c, url).Start()
+	_ = exec.Command(c, url).Start()
 }
 
 // Execute runs the root command.

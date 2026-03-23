@@ -144,7 +144,7 @@ func FormatTable(instances []Info) string {
 		return "No running instances."
 	}
 	var sb strings.Builder
-	sb.WriteString(fmt.Sprintf("%-6s %-7s %-40s %s\n", "PORT", "PID", "REPO", "REFS"))
+	fmt.Fprintf(&sb, "%-6s %-7s %-40s %s\n", "PORT", "PID", "REPO", "REFS")
 	sb.WriteString(strings.Repeat("─", 80) + "\n")
 	for _, inst := range instances {
 		refs := "working tree"
@@ -153,12 +153,12 @@ func FormatTable(instances []Info) string {
 		} else if inst.Base != "" {
 			refs = inst.Base
 		}
-		sb.WriteString(fmt.Sprintf("%-6s %-7s %-40s %s\n",
+		fmt.Fprintf(&sb, "%-6s %-7s %-40s %s\n",
 			strconv.Itoa(inst.Port),
 			strconv.Itoa(inst.PID),
 			truncate(inst.RepoDir, 40),
 			refs,
-		))
+		)
 	}
 	return sb.String()
 }
