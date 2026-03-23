@@ -7,10 +7,9 @@ export default {
       colors: {
         cream: '#fefdfb',
         'dark-slate': '#1a1d29',
-        // Rename these accent colors to match your project (e.g. prr-amber, distill-teal).
-        'accent-primary': '#f59e0b',
-        'accent-secondary': '#d97706',
-        'accent-tertiary': '#fbbf24',
+        'accent-primary': '#58a6ff',
+        'accent-secondary': '#388bfd',
+        'accent-tertiary': '#79c0ff',
         'dark-gray': '#2d3748',
         'slate-gray': '#475569',
       },

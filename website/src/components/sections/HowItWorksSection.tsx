@@ -3,25 +3,24 @@
 import { Download, Terminal, FileText } from 'lucide-react';
 
 export function HowItWorksSection() {
-  // TODO: Replace with your project's steps.
   const steps = [
     {
       icon: <Download className="w-8 h-8" />,
       step: '1',
       title: 'Install glimpse',
-      description: 'Install via go install, Homebrew, or download a prebuilt binary from GitHub Releases. Single binary, zero runtime dependencies.',
+      description: 'Install via go install, Homebrew, or download a prebuilt binary. Single binary, zero dependencies.',
     },
     {
       icon: <Terminal className="w-8 h-8" />,
       step: '2',
-      title: 'Run a Command',
-      description: 'Describe what happens when the user runs the main command.',
+      title: 'Run glimpse',
+      description: 'Run glimpse in any git repo — with no args for working tree changes, or pass refs like main..feature.',
     },
     {
       icon: <FileText className="w-8 h-8" />,
       step: '3',
-      title: 'Get Results',
-      description: 'Describe the output or result the user gets.',
+      title: 'Review in Browser',
+      description: 'Your browser opens with a GitHub-style diff view. Navigate files, see line-level additions and deletions.',
     },
   ];
 

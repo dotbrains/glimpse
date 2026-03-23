@@ -1,27 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
   <rect width="1200" height="630" fill="#0d1117"/>
   <rect x="40" y="40" width="1120" height="550" rx="12" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+
+  <!-- Header bar -->
   <rect x="40" y="40" width="1120" height="56" rx="12" fill="#161b22"/>
   <rect x="40" y="84" width="1120" height="1" fill="#30363d"/>
   <circle cx="72" cy="68" r="6" fill="#f85149"/>
   <circle cx="92" cy="68" r="6" fill="#d29922"/>
   <circle cx="112" cy="68" r="6" fill="#3fb950"/>
-  <text x="600" y="220" text-anchor="middle" font-family="monospace" font-weight="700" font-size="80" fill="#e6edf3">glimpse</text>
-  <text x="600" y="290" text-anchor="middle" font-family="sans-serif" font-size="28" fill="#8b949e">GitHub-style Git Diff Viewer CLI</text>
-  <g font-family="monospace" font-size="16">
+
+  <!-- Title -->
+  <text x="600" y="220" text-anchor="middle" font-family="SF Mono, SFMono-Regular, Consolas, monospace" font-weight="700" font-size="80" fill="#e6edf3">glimpse</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="290" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="28" fill="#8b949e">GitHub-style Git Diff Viewer CLI</text>
+
+  <!-- Fake diff lines -->
+  <g font-family="SF Mono, SFMono-Regular, Consolas, monospace" font-size="16">
     <text x="200" y="370" fill="#484f58">10</text>
     <text x="250" y="370" fill="#8b949e">  fmt.Println("hello")</text>
+
     <rect x="170" y="380" width="860" height="28" rx="2" fill="rgba(248,81,73,0.15)"/>
     <text x="200" y="400" fill="#484f58">11</text>
     <text x="232" y="400" fill="#f85149">-</text>
     <text x="250" y="400" fill="#ffa198">  fmt.Println("old")</text>
+
     <rect x="170" y="410" width="860" height="28" rx="2" fill="rgba(63,185,80,0.15)"/>
     <text x="200" y="430" fill="#484f58">11</text>
     <text x="232" y="430" fill="#3fb950">+</text>
     <text x="250" y="430" fill="#aff5b4">  fmt.Println("new")</text>
+
     <text x="200" y="460" fill="#484f58">12</text>
     <text x="250" y="460" fill="#8b949e">  os.Exit(0)</text>
   </g>
+
+  <!-- Bottom badge -->
   <rect x="460" y="500" width="280" height="36" rx="18" fill="#21262d" stroke="#30363d" stroke-width="1"/>
-  <text x="600" y="524" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#58a6ff">github.com/dotbrains/glimpse</text>
+  <text x="600" y="524" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" fill="#58a6ff">github.com/dotbrains/glimpse</text>
 </svg>

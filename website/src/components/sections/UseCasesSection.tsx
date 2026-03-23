@@ -1,24 +1,38 @@
 'use client';
 
-import { Terminal, Settings, Zap } from 'lucide-react';
+import { GitBranch, Eye, Clock, GitPullRequest, Tag, RefreshCw } from 'lucide-react';
 
 export function UseCasesSection() {
-  // TODO: Replace with your project's use cases.
   const useCases = [
     {
-      icon: <Terminal className="w-6 h-6" />,
-      title: 'Use Case One',
-      description: 'Describe who uses this and what problem it solves for them.',
+      icon: <Eye className="w-6 h-6" />,
+      title: 'Pre-Commit Review',
+      description: 'Run glimpse before committing to visually review all your uncommitted changes in a proper diff view.',
     },
     {
-      icon: <Settings className="w-6 h-6" />,
-      title: 'Use Case Two',
-      description: 'Describe the second use case.',
+      icon: <GitBranch className="w-6 h-6" />,
+      title: 'Branch Comparison',
+      description: 'Compare your feature branch against main before opening a PR. Spot issues early.',
     },
     {
-      icon: <Zap className="w-6 h-6" />,
-      title: 'Use Case Three',
-      description: 'Describe the third use case.',
+      icon: <Clock className="w-6 h-6" />,
+      title: 'Commit History',
+      description: 'Review your last N commits with glimpse HEAD~3. See exactly what shipped in a batch of changes.',
+    },
+    {
+      icon: <Tag className="w-6 h-6" />,
+      title: 'Release Diffs',
+      description: 'Compare two release tags (glimpse v1.0.0 v2.0.0) to see everything that changed between versions.',
+    },
+    {
+      icon: <GitPullRequest className="w-6 h-6" />,
+      title: 'AI Agent Output',
+      description: 'Review changes made by AI coding agents (Cursor, Claude Code, Codex) in a proper diff view before accepting.',
+    },
+    {
+      icon: <RefreshCw className="w-6 h-6" />,
+      title: 'Multi-Repo Workflow',
+      description: 'Run glimpse in multiple repos simultaneously. Each gets its own port, existing instances are reused automatically.',
     },
   ];
 

@@ -1,24 +1,38 @@
 'use client';
 
-import { Terminal, Settings, Zap } from 'lucide-react';
+import { GitBranch, Eye, Layers, Globe, Terminal, Zap } from 'lucide-react';
 
 export function FeaturesSection() {
-  // TODO: Replace with your project's features and icons.
   const features = [
     {
-      icon: <Terminal className="w-6 h-6" />,
-      title: 'Feature One',
-      description: 'Describe your first key feature here. What does it do? Why does the user care?',
+      icon: <Eye className="w-6 h-6" />,
+      title: 'GitHub-Style Diffs',
+      description: 'Syntax-highlighted, split diff view with addition/deletion coloring, line numbers, and hunk headers — just like GitHub.',
     },
     {
-      icon: <Settings className="w-6 h-6" />,
-      title: 'Feature Two',
-      description: 'Describe your second key feature here.',
+      icon: <GitBranch className="w-6 h-6" />,
+      title: 'Any Git Ref',
+      description: 'Branches, tags, commits, ranges (main..feature), HEAD~N — glimpse resolves them all.',
+    },
+    {
+      icon: <Terminal className="w-6 h-6" />,
+      title: 'Working Tree Diffs',
+      description: 'Run glimpse with no args to view all uncommitted changes — both staged and unstaged.',
+    },
+    {
+      icon: <Layers className="w-6 h-6" />,
+      title: 'Multi-Instance',
+      description: 'Run multiple repos simultaneously. Each gets its own auto-assigned port. Re-running opens the existing instance.',
+    },
+    {
+      icon: <Globe className="w-6 h-6" />,
+      title: 'Embedded Web UI',
+      description: 'All HTML/CSS/JS is embedded in the binary. No external dependencies, no npm install. Just run glimpse.',
     },
     {
       icon: <Zap className="w-6 h-6" />,
-      title: 'Feature Three',
-      description: 'Describe your third key feature here.',
+      title: 'Single Binary',
+      description: 'Written in Go, compiles to a single static binary. Install via go install, Homebrew, or download from GitHub Releases.',
     },
   ];
 

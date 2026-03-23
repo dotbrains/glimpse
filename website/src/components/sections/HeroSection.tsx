@@ -22,12 +22,11 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
           </div>
 
           <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-cream leading-tight mb-4 sm:mb-6 px-4">
-            {/* TODO: Replace with your headline */}
-            Your Headline,{' '}
-            <span className="text-gradient drop-shadow-md">One Command</span>
+            Git Diffs,{' '}
+            <span className="text-gradient drop-shadow-md">Beautifully Rendered</span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-cream/70 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto px-4">
-            Browser-based, GitHub-style diff viewer for git changes. View uncommitted changes, branch comparisons, commit ranges, and more with syntax-highlighted split diffs.
+            Browser-based, GitHub-style diff viewer for git changes. View uncommitted changes, branch comparisons, commit ranges, and more — one command, instant results.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
             <a href="/#quick-start" className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-accent-primary to-accent-secondary hover:from-accent-secondary hover:to-accent-tertiary text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-lg shadow-lg shadow-accent-primary/30 transition-all">
@@ -43,14 +42,13 @@ export function HeroSection({ onLearnMore }: HeroSectionProps) {
 
         {/* Hero Stats */}
         <div className="mt-12 sm:mt-16 md:mt-24 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-5xl mx-auto px-4">
-          {/* TODO: Replace with your project's key stats */}
           <div className="bg-dark-gray/50 backdrop-blur-sm border border-accent-primary/30 rounded-xl p-4 sm:p-6 text-center">
-            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient mb-2">Stat 1</div>
-            <div className="text-cream/60 text-sm sm:text-base md:text-lg">Description</div>
+            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient mb-2">Split</div>
+            <div className="text-cream/60 text-sm sm:text-base md:text-lg">Diff View</div>
           </div>
           <div className="bg-dark-gray/50 backdrop-blur-sm border border-accent-secondary/30 rounded-xl p-4 sm:p-6 text-center">
-            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient mb-2">Stat 2</div>
-            <div className="text-cream/60 text-sm sm:text-base md:text-lg">Description</div>
+            <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient mb-2">30+</div>
+            <div className="text-cream/60 text-sm sm:text-base md:text-lg">Languages</div>
           </div>
           <div className="bg-dark-gray/50 backdrop-blur-sm border border-accent-tertiary/30 rounded-xl p-4 sm:p-6 text-center">
             <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient mb-2">Go</div>

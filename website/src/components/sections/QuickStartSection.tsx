@@ -53,21 +53,29 @@ tar -xzf /tmp/glimpse_darwin_arm64.tar.gz -C /usr/local/bin`;
           </div>
           <div className="bg-dark-gray/50 rounded-xl p-6 sm:p-8 border border-accent-secondary/20 min-w-0">
             <h3 className="text-xl sm:text-2xl font-bold text-cream mb-4 sm:mb-6">2. Use</h3>
-            {/* TODO: Replace with your project's usage examples */}
             <CodeBlock
-              code={`# Run glimpse
+              code={`# View uncommitted changes
 glimpse
 
-# Initialize config
-glimpse config init
+# Compare against main
+glimpse main
 
-# Show version
-glimpse --version`}
+# Branch comparison
+glimpse main..feature
+
+# Last 3 commits
+glimpse HEAD~3
+
+# Custom port, don't open browser
+glimpse --port 9000 --no-open
+
+# List running instances
+glimpse list`}
               language="bash"
             />
             <div className="mt-6 bg-accent-primary/10 border border-accent-primary/30 rounded-lg p-4 sm:p-5">
               <p className="text-cream text-sm leading-relaxed">
-                <span className="text-accent-primary font-semibold">Tip:</span> Run <code className="bg-dark-slate/80 px-2 py-1 rounded text-accent-tertiary font-mono text-xs">glimpse config init</code> to scaffold a config file.
+                <span className="text-accent-primary font-semibold">Tip:</span> If you run <code className="bg-dark-slate/80 px-2 py-1 rounded text-accent-tertiary font-mono text-xs">glimpse</code> in a repo that already has a running instance, it opens the existing one instead of starting a new server.
               </p>
             </div>
           </div>

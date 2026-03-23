@@ -4,23 +4,53 @@ import React, { useState } from 'react';
 import { CodeBlock } from '@/components/CodeBlock';
 
 export function CodeExamplesSection() {
-  const [activeTab, setActiveTab] = useState<'basic' | 'config'>('basic');
+  const [activeTab, setActiveTab] = useState<'working' | 'branches' | 'commits' | 'multi'>('working');
 
-  // TODO: Replace with your project's code examples.
   const examples = {
-    basic: `# Basic usage
+    working: `# View all uncommitted changes (staged + unstaged)
 $ glimpse
-→ output example here
+→ 3 files changed, 12 insertions(+), 4 deletions(-)
+→ Serving at http://localhost:5391`,
+    branches: `# Compare current branch against main
+$ glimpse main
 
-# With options
-$ glimpse --verbose`,
-    config: `# ~/.config/glimpse/config.yaml
-# Add your config example here`,
+# Compare two branches
+$ glimpse main..feature
+$ glimpse main feature
+$ glimpse --base main --compare feature
+
+# Compare tags
+$ glimpse v1.0.0 v2.0.0`,
+    commits: `# View last commit
+$ glimpse HEAD~1
+
+# View last 3 commits
+$ glimpse HEAD~3
+
+# Changes since a specific commit
+$ glimpse abc1234`,
+    multi: `# Terminal 1 — starts on :5391
+$ cd ~/projects/app && glimpse
+
+# Terminal 2 — starts on :5392
+$ cd ~/projects/api && glimpse
+
+# List all running instances
+$ glimpse list
+PORT   PID     REPO                                     REFS
+────────────────────────────────────────────────────────────────────────────────
+5391   12345   /Users/dev/projects/app                  working tree
+5392   12346   /Users/dev/projects/api                  main..feature
+
+# Stop existing and start fresh
+$ glimpse --new`,
   };
 
   const tabs = [
-    { key: 'basic' as const, label: 'Basic Usage', language: 'bash' },
-    { key: 'config' as const, label: 'Config', language: 'yaml' },
+    { key: 'working' as const, label: 'Working Tree', language: 'bash' },
+    { key: 'branches' as const, label: 'Branches', language: 'bash' },
+    { key: 'commits' as const, label: 'Commits', language: 'bash' },
+    { key: 'multi' as const, label: 'Multi-Instance', language: 'bash' },
   ];
 
   return (
