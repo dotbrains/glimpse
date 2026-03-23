@@ -80,7 +80,7 @@
   </g>
 
   <!-- Terminal snippet -->
-  <g transform="translate(640, 160)">
+  <g transform="translate(640, 180)">
     <rect width="480" height="270" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="2"/>
 
     <rect width="480" height="40" rx="12" fill="#161b22"/>
