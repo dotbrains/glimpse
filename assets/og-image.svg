@@ -1,40 +1,110 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
-  <rect width="1200" height="630" fill="#0d1117"/>
-  <rect x="40" y="40" width="1120" height="550" rx="12" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#010409;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#58a6ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#388bfd;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#388bfd;stop-opacity:0.2" />
+      <stop offset="50%" style="stop-color:#58a6ff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#79c0ff;stop-opacity:0.2" />
+    </linearGradient>
+  </defs>
 
-  <!-- Header bar -->
-  <rect x="40" y="40" width="1120" height="56" rx="12" fill="#161b22"/>
-  <rect x="40" y="84" width="1120" height="1" fill="#30363d"/>
-  <circle cx="72" cy="68" r="6" fill="#f85149"/>
-  <circle cx="92" cy="68" r="6" fill="#d29922"/>
-  <circle cx="112" cy="68" r="6" fill="#3fb950"/>
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
 
-  <!-- Title -->
-  <text x="600" y="220" text-anchor="middle" font-family="SF Mono, SFMono-Regular, Consolas, monospace" font-weight="700" font-size="80" fill="#e6edf3">glimpse</text>
-
-  <!-- Subtitle -->
-  <text x="600" y="290" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="28" fill="#8b949e">GitHub-style Git Diff Viewer CLI</text>
-
-  <!-- Fake diff lines -->
-  <g font-family="SF Mono, SFMono-Regular, Consolas, monospace" font-size="16">
-    <text x="200" y="370" fill="#484f58">10</text>
-    <text x="250" y="370" fill="#8b949e">  fmt.Println("hello")</text>
-
-    <rect x="170" y="380" width="860" height="28" rx="2" fill="rgba(248,81,73,0.15)"/>
-    <text x="200" y="400" fill="#484f58">11</text>
-    <text x="232" y="400" fill="#f85149">-</text>
-    <text x="250" y="400" fill="#ffa198">  fmt.Println("old")</text>
-
-    <rect x="170" y="410" width="860" height="28" rx="2" fill="rgba(63,185,80,0.15)"/>
-    <text x="200" y="430" fill="#484f58">11</text>
-    <text x="232" y="430" fill="#3fb950">+</text>
-    <text x="250" y="430" fill="#aff5b4">  fmt.Println("new")</text>
-
-    <text x="200" y="460" fill="#484f58">12</text>
-    <text x="250" y="460" fill="#8b949e">  os.Exit(0)</text>
+  <!-- Decorative grid -->
+  <g opacity="0.03">
+    <line x1="0" y1="150" x2="1200" y2="150" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="315" x2="1200" y2="315" stroke="#fff" stroke-width="1"/>
+    <line x1="0" y1="480" x2="1200" y2="480" stroke="#fff" stroke-width="1"/>
+    <line x1="300" y1="0" x2="300" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="600" y1="0" x2="600" y2="630" stroke="#fff" stroke-width="1"/>
+    <line x1="900" y1="0" x2="900" y2="630" stroke="#fff" stroke-width="1"/>
   </g>
 
-  <!-- Bottom badge -->
-  <rect x="460" y="500" width="280" height="36" rx="18" fill="#21262d" stroke="#30363d" stroke-width="1"/>
-  <text x="600" y="524" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="14" fill="#58a6ff">github.com/dotbrains/glimpse</text>
+  <!-- Accent bar at top -->
+  <rect width="1200" height="4" fill="url(#accentGradient)"/>
+
+  <!-- Logo: speech bubble with "diff" -->
+  <g transform="translate(100, 200)">
+    <rect width="100" height="100" rx="20" fill="url(#logoGradient)"/>
+    <g transform="translate(50, 42)">
+      <path d="M0 -18C-14 -18 -25 -10 -25 -1C-25 5 -20 10 -13 13L-17 22L-8 15C-6 15 -3 16 0 16C14 16 25 8 25 -1C25 -10 14 -18 0 -18Z" fill="#0d1117"/>
+      <text x="0" y="3" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-weight="800" font-size="12" fill="#58a6ff">diff</text>
+    </g>
+  </g>
+
+  <!-- Main heading -->
+  <text x="240" y="260" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="72" font-weight="700" fill="white" letter-spacing="-1">
+    glimpse
+  </text>
+
+  <!-- Subtitle -->
+  <text x="240" y="320" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="32" font-weight="400" fill="#8b949e" letter-spacing="0">
+    GitHub-style diff viewer, one command.
+  </text>
+
+  <!-- Feature badges -->
+  <g transform="translate(240, 360)">
+    <rect x="0" y="0" width="160" height="40" rx="20" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>
+    <text x="80" y="26" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+          font-size="15" font-weight="600" fill="#58a6ff" text-anchor="middle">
+      Split Diffs
+    </text>
+
+    <rect x="175" y="0" width="160" height="40" rx="20" fill="#161b22" stroke="#388bfd" stroke-width="1.5"/>
+    <text x="255" y="26" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+          font-size="15" font-weight="600" fill="#388bfd" text-anchor="middle">
+      AI Review
+    </text>
+
+    <rect x="0" y="55" width="160" height="40" rx="20" fill="#161b22" stroke="#79c0ff" stroke-width="1.5"/>
+    <text x="80" y="81" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+          font-size="15" font-weight="600" fill="#79c0ff" text-anchor="middle">
+      GitHub PRs
+    </text>
+
+    <rect x="175" y="55" width="160" height="40" rx="20" fill="#161b22" stroke="#a5d6ff" stroke-width="1.5"/>
+    <text x="255" y="81" font-family="-apple-system, BlinkMacSystemFont, sans-serif"
+          font-size="15" font-weight="600" fill="#a5d6ff" text-anchor="middle">
+      Comments
+    </text>
+  </g>
+
+  <!-- Terminal snippet -->
+  <g transform="translate(700, 160)">
+    <rect width="400" height="280" rx="12" fill="#0d1117" stroke="#30363d" stroke-width="2"/>
+
+    <rect width="400" height="40" rx="12" fill="#161b22"/>
+    <circle cx="20" cy="20" r="5" fill="#f85149" opacity="0.8"/>
+    <circle cx="40" cy="20" r="5" fill="#d29922" opacity="0.8"/>
+    <circle cx="60" cy="20" r="5" fill="#3fb950" opacity="0.8"/>
+
+    <text x="20" y="75" font-family="'SF Mono', Monaco, monospace"
+          font-size="15" fill="#58a6ff" font-weight="500">$ glimpse main..feature</text>
+    <text x="20" y="105" font-family="'SF Mono', Monaco, monospace"
+          font-size="14" fill="#8b949e">→ 8 files changed, +42, -18</text>
+    <text x="20" y="130" font-family="'SF Mono', Monaco, monospace"
+          font-size="14" fill="#8b949e">→ Serving at http://localhost:5391</text>
+    <text x="20" y="160" font-family="'SF Mono', Monaco, monospace"
+          font-size="14" fill="#3fb950">✓ Browser opened.</text>
+
+    <text x="20" y="200" font-family="'SF Mono', Monaco, monospace"
+          font-size="15" fill="#58a6ff" font-weight="500">$ glimpse review --focus security</text>
+    <text x="20" y="230" font-family="'SF Mono', Monaco, monospace"
+          font-size="14" fill="#8b949e">→ Reviewing 8 files...</text>
+    <text x="20" y="255" font-family="'SF Mono', Monaco, monospace"
+          font-size="14" fill="#3fb950">✓ 5 comments posted</text>
+  </g>
+
+  <!-- Bottom accent -->
+  <rect y="626" width="1200" height="4" fill="url(#accentGradient)"/>
 </svg>
