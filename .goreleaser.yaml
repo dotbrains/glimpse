@@ -1,0 +1,39 @@
+version: 2
+
+builds:
+  - binary: __PROJECT_NAME__
+    goos: [darwin, linux]
+    goarch: [amd64, arm64]
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+
+homebrew_casks:
+  - repository:
+      owner: dotbrains
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    name: __PROJECT_NAME__
+    homepage: https://github.com/dotbrains/__PROJECT_NAME__
+    description: "__PROJECT_DESCRIPTION__"
+    license: "PolyForm Shield 1.0.0"
+    binaries: [__PROJECT_NAME__]
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/__PROJECT_NAME__"]
+          end
+
+archives:
+  - formats: [tar.gz]
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^chore:"
