@@ -27,7 +27,7 @@ func TestNewRootCmd(t *testing.T) {
 	for _, c := range root.Commands() {
 		cmds[c.Name()] = true
 	}
-	for _, want := range []string{"config", "list"} {
+	for _, want := range []string{"config", "list", "review", "resolve"} {
 		if !cmds[want] {
 			t.Errorf("missing subcommand %q", want)
 		}
@@ -57,6 +57,61 @@ func TestExecute_Help(t *testing.T) {
 	}
 	if !strings.Contains(output, "config") {
 		t.Error("expected 'config' subcommand in help")
+	}
+	if !strings.Contains(output, "review") {
+		t.Error("expected 'review' subcommand in help")
+	}
+	if !strings.Contains(output, "resolve") {
+		t.Error("expected 'resolve' subcommand in help")
+	}
+}
+
+func TestListCmd_Help(t *testing.T) {
+	root := newRootCmd("dev")
+	root.SetArgs([]string{"list", "--help"})
+	var out bytes.Buffer
+	root.SetOut(&out)
+
+	err := root.Execute()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if !strings.Contains(out.String(), "running glimpse instances") {
+		t.Error("expected list help text")
+	}
+}
+
+func TestReviewCmd_Help(t *testing.T) {
+	root := newRootCmd("dev")
+	root.SetArgs([]string{"review", "--help"})
+	var out bytes.Buffer
+	root.SetOut(&out)
+
+	err := root.Execute()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	output := out.String()
+	if !strings.Contains(output, "AI agent") {
+		t.Error("expected review help text")
+	}
+	if !strings.Contains(output, "--focus") {
+		t.Error("expected --focus flag in help")
+	}
+}
+
+func TestResolveCmd_Help(t *testing.T) {
+	root := newRootCmd("dev")
+	root.SetArgs([]string{"resolve", "--help"})
+	var out bytes.Buffer
+	root.SetOut(&out)
+
+	err := root.Execute()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if !strings.Contains(out.String(), "unresolved") {
+		t.Error("expected resolve help text")
 	}
 }
 

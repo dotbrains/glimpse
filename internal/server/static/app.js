@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         lineComments.forEach(c => {
           const cr = document.createElement('tr');
           cr.className = 'comment-row' + (c.resolved ? ' resolved' : '');
-          cr.innerHTML = '<td class="line-num"></td><td class="line-num"></td><td class="comment-cell"><span class="severity-tag ' + c.severity + '">' + c.severity + '</span> <span class="comment-body">' + esc(c.body) + '</span> <span class="comment-author">' + c.author + '</span>' + (!c.resolved ? ' <button class="resolve-btn" data-id="' + c.id + '">resolve</button>' : ' <span class="resolved-tag">resolved</span>') + '</td>';
+          cr.innerHTML = '<td class="line-num"></td><td class="line-num"></td><td class="comment-cell"><span class="severity-tag ' + c.severity + '">' + c.severity + '</span> <span class="comment-body">' + esc(c.body) + '</span> <span class="comment-author">' + c.author + '</span>' + (!c.resolved ? ' <button class="resolve-btn" data-id="' + c.id + '">resolve</button>' : ' <span class="resolved-tag">resolved</span>') + ' <button class="copy-btn" data-text="' + esc(c.file + ':' + c.line + ' [' + c.severity + '] ' + c.body) + '">copy</button></td>';
           table.appendChild(cr);
         });
       });
@@ -75,6 +75,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     card.appendChild(table);
     container.appendChild(card);
   });
+
+  // Show toolbar with copy-all button if there are comments.
+  if (allComments.length > 0) {
+    const toolbar = document.getElementById('toolbar');
+    toolbar.style.display = 'flex';
+    const copyAllBtn = document.createElement('button');
+    copyAllBtn.className = 'copy-all-btn';
+    copyAllBtn.textContent = 'Copy All Comments';
+    copyAllBtn.addEventListener('click', () => {
+      const open = allComments.filter(c => !c.resolved);
+      const text = open.map(c => c.file + ':' + c.line + ' [' + c.severity + '] ' + c.body + ' (id: ' + c.id + ')').join('\n');
+      navigator.clipboard.writeText(text || 'No open comments.');
+      copyAllBtn.textContent = 'Copied!';
+      setTimeout(() => { copyAllBtn.textContent = 'Copy All Comments'; }, 2000);
+    });
+    toolbar.appendChild(copyAllBtn);
+  }
 
   // Click gutter to add comment.
   document.addEventListener('click', async (e) => {
@@ -97,6 +114,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const id = e.target.dataset.id;
     await fetch('/api/comments/' + id, { method: 'PATCH' });
     location.reload();
+  });
+
+  // Copy single comment button.
+  document.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('copy-btn')) return;
+    const text = e.target.dataset.text;
+    navigator.clipboard.writeText(text);
+    e.target.textContent = 'copied!';
+    setTimeout(() => { e.target.textContent = 'copy'; }, 1500);
   });
 });
 
