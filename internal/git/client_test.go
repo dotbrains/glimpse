@@ -1,6 +1,9 @@
 package git
 
 import (
+	"context"
+	"os"
+	"os/exec"
 	"testing"
 )
 
@@ -58,8 +61,185 @@ func TestResolveRefs_HeadTilde(t *testing.T) {
 }
 
 func TestGitInstalled(t *testing.T) {
-	// Git should be installed in CI and dev environments.
 	if !GitInstalled() {
 		t.Skip("git not installed")
+	}
+}
+
+// initTestRepo creates a temp git repo with one commit and returns the path.
+func initTestRepo(t *testing.T) string {
+	t.Helper()
+	dir := t.TempDir()
+	for _, args := range [][]string{
+		{"init"},
+		{"config", "user.email", "test@test.com"},
+		{"config", "user.name", "Test"},
+	} {
+		cmd := append([]string{"-C", dir}, args...)
+		out, err := exec.Command("git", cmd...).CombinedOutput()
+		if err != nil {
+			t.Fatalf("git %v: %s %v", args, out, err)
+		}
+	}
+	// Create initial commit.
+	os.WriteFile(dir+"/main.go", []byte("package main\n"), 0o644)
+	exec.Command("git", "-C", dir, "add", ".").Run()
+	exec.Command("git", "-C", dir, "commit", "-m", "init").Run()
+	return dir
+}
+
+func TestClient_IsRepo(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+	ctx := context.Background()
+
+	if !c.IsRepo(ctx) {
+		t.Error("expected IsRepo = true")
+	}
+
+	c2 := NewClient(t.TempDir())
+	if c2.IsRepo(ctx) {
+		t.Error("expected IsRepo = false for non-repo")
+	}
+}
+
+func TestClient_TopLevel(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+
+	top, err := c.TopLevel(context.Background())
+	if err != nil {
+		t.Fatalf("TopLevel error: %v", err)
+	}
+	if top == "" {
+		t.Error("expected non-empty top level")
+	}
+}
+
+func TestClient_CurrentBranch(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+
+	branch := c.CurrentBranch(context.Background())
+	// Should be master or main depending on git config.
+	if branch == "" {
+		t.Error("expected non-empty branch")
+	}
+}
+
+func TestClient_Diff_WorkingTree(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+	ctx := context.Background()
+
+	// Modify a file.
+	os.WriteFile(repo+"/main.go", []byte("package main\n\nfunc main() {}\n"), 0o644)
+
+	diff, err := c.Diff(ctx, "", "")
+	if err != nil {
+		t.Fatalf("Diff error: %v", err)
+	}
+	if diff == "" {
+		t.Error("expected non-empty diff for modified file")
+	}
+}
+
+func TestClient_DiffStaged(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+	ctx := context.Background()
+
+	// Stage a change.
+	os.WriteFile(repo+"/new.go", []byte("package main\n"), 0o644)
+	exec.Command("git", "-C", repo, "add", "new.go").Run()
+
+	diff, err := c.DiffStaged(ctx)
+	if err != nil {
+		t.Fatalf("DiffStaged error: %v", err)
+	}
+	if diff == "" {
+		t.Error("expected non-empty staged diff")
+	}
+}
+
+func TestClient_HasChanges(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+	ctx := context.Background()
+
+	// Clean repo — no changes.
+	if c.HasChanges(ctx) {
+		t.Error("expected no changes in clean repo")
+	}
+
+	// Modify file.
+	os.WriteFile(repo+"/main.go", []byte("package main\n\n// changed\n"), 0o644)
+	if !c.HasChanges(ctx) {
+		t.Error("expected changes after modifying file")
+	}
+}
+
+func TestClient_RevParse(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+
+	sha, err := c.RevParse(context.Background(), "HEAD")
+	if err != nil {
+		t.Fatalf("RevParse error: %v", err)
+	}
+	if len(sha) < 7 {
+		t.Errorf("expected SHA, got %q", sha)
+	}
+
+	_, err = c.RevParse(context.Background(), "nonexistent-ref-abc")
+	if err == nil {
+		t.Error("expected error for nonexistent ref")
+	}
+}
+
+func TestClient_ShortSHA(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+
+	short := c.ShortSHA(context.Background(), "HEAD")
+	if len(short) < 4 || len(short) > 12 {
+		t.Errorf("expected short SHA, got %q", short)
+	}
+}
+
+func TestClient_RepoName(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+
+	name := c.RepoName(context.Background())
+	if name == "" || name == "unknown" {
+		t.Errorf("expected non-empty repo name, got %q", name)
 	}
 }
