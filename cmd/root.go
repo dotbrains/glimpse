@@ -11,11 +11,14 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/dotbrains/glimpse/internal/comments"
 	"github.com/dotbrains/glimpse/internal/config"
 	"github.com/dotbrains/glimpse/internal/diff"
+	"github.com/dotbrains/glimpse/internal/gh"
 	"github.com/dotbrains/glimpse/internal/git"
 	"github.com/dotbrains/glimpse/internal/instance"
 	"github.com/dotbrains/glimpse/internal/server"
+	"strconv"
 	"github.com/spf13/cobra"
 )
 
@@ -53,6 +56,8 @@ func newRootCmd(version string) *cobra.Command {
 	root.Flags().BoolVar(&flagNew, "new", false, "stop existing instance and start fresh")
 
 	root.AddCommand(newListCmd())
+	root.AddCommand(newReviewCmd())
+	root.AddCommand(newResolveCmd())
 	root.AddCommand(newConfigCmd())
 
 	return root
@@ -60,6 +65,11 @@ func newRootCmd(version string) *cobra.Command {
 
 func runDiff(cmd *cobra.Command, args []string) error {
 	ctx := context.Background()
+
+	// Check for PR URL as first arg.
+	if len(args) > 0 && gh.IsPRURL(args[0]) {
+		return runPRDiff(cmd, args[0])
+	}
 
 	if !git.GitInstalled() {
 		return fmt.Errorf("git is not installed or not on PATH")
@@ -135,7 +145,8 @@ func runDiff(cmd *cobra.Command, args []string) error {
 		port = instance.NextPort(defaultBasePort)
 	}
 
-	srv := server.NewServer(data, port)
+	store := comments.NewStore(strconv.Itoa(port))
+	srv := server.NewServer(data, port, store)
 
 	// Register instance.
 	info := instance.Info{
@@ -160,6 +171,73 @@ func runDiff(cmd *cobra.Command, args []string) error {
 	}
 
 	// Handle shutdown.
+	sigCh := make(chan os.Signal, 1)
+	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)
+	go func() {
+		<-sigCh
+		instance.Unregister(port)
+		os.Exit(0)
+	}()
+
+	return srv.ListenAndServe()
+}
+
+func runPRDiff(cmd *cobra.Command, prURL string) error {
+	ctx := context.Background()
+
+	if !gh.GHInstalled() {
+		return fmt.Errorf("gh CLI is required for PR URLs — install from https://cli.github.com")
+	}
+
+	owner, repo, number, err := gh.ParsePRURL(prURL)
+	if err != nil {
+		return err
+	}
+
+	ghClient := gh.NewClient()
+
+	if !flagQuiet {
+		cmd.Printf("→ Fetching PR #%s from %s/%s...\n", number, owner, repo)
+	}
+
+	prInfo, err := ghClient.FetchPRInfo(ctx, owner, repo, number)
+	if err != nil {
+		return err
+	}
+
+	rawDiff, err := ghClient.FetchPRDiff(ctx, owner, repo, number)
+	if err != nil {
+		return err
+	}
+
+	files := diff.Parse(rawDiff)
+
+	data := server.DiffData{
+		Repo:    owner + "/" + repo,
+		Base:    prInfo.BaseRef,
+		Compare: prInfo.HeadRef,
+		Summary: fmt.Sprintf("PR #%d: %s — %s", prInfo.Number, prInfo.Title, diff.Summary(files)),
+		Files:   files,
+	}
+
+	port := flagPort
+	if port == 0 {
+		port = instance.NextPort(defaultBasePort)
+	}
+
+	store := comments.NewStore(strconv.Itoa(port))
+	srv := server.NewServer(data, port, store)
+
+	if !flagQuiet {
+		cmd.Printf("→ PR #%d: %s\n", prInfo.Number, prInfo.Title)
+		cmd.Printf("→ %s\n", diff.Summary(files))
+		cmd.Printf("→ Serving at %s\n", srv.Addr())
+	}
+
+	if !flagNoOpen {
+		openBrowser(srv.Addr())
+	}
+
 	sigCh := make(chan os.Signal, 1)
 	signal.Notify(sigCh, syscall.SIGINT, syscall.SIGTERM)
 	go func() {

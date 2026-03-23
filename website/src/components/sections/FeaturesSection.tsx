@@ -1,13 +1,33 @@
 'use client';
 
-import { GitBranch, Eye, Layers, Globe, Terminal, Zap } from 'lucide-react';
+import { GitBranch, Eye, Layers, Globe, Terminal, Zap, GitPullRequest, Bot, MessageSquare, CheckCircle } from 'lucide-react';
 
 export function FeaturesSection() {
   const features = [
     {
       icon: <Eye className="w-6 h-6" />,
       title: 'GitHub-Style Diffs',
-      description: 'Syntax-highlighted, split diff view with addition/deletion coloring, line numbers, and hunk headers — just like GitHub.',
+      description: 'Syntax-highlighted split diff view with addition/deletion coloring, line numbers, hunk headers, and file status badges.',
+    },
+    {
+      icon: <GitPullRequest className="w-6 h-6" />,
+      title: 'GitHub PRs',
+      description: 'Pass a PR URL to view any pull request locally. Fetches the diff via gh CLI — no cloning needed.',
+    },
+    {
+      icon: <MessageSquare className="w-6 h-6" />,
+      title: 'Inline Comments',
+      description: 'Click any line to leave comments with severity tags: must-fix, suggestion, nit, question. Persisted to disk.',
+    },
+    {
+      icon: <Bot className="w-6 h-6" />,
+      title: 'AI Code Review',
+      description: 'Run glimpse review to have an AI agent review the diff and post severity-tagged inline comments to the viewer.',
+    },
+    {
+      icon: <CheckCircle className="w-6 h-6" />,
+      title: 'Resolve Workflow',
+      description: 'Run glimpse resolve to output open comments for your AI agent. Review → check → resolve, all from the terminal.',
     },
     {
       icon: <GitBranch className="w-6 h-6" />,
@@ -25,14 +45,9 @@ export function FeaturesSection() {
       description: 'Run multiple repos simultaneously. Each gets its own auto-assigned port. Re-running opens the existing instance.',
     },
     {
-      icon: <Globe className="w-6 h-6" />,
-      title: 'Embedded Web UI',
-      description: 'All HTML/CSS/JS is embedded in the binary. No external dependencies, no npm install. Just run glimpse.',
-    },
-    {
       icon: <Zap className="w-6 h-6" />,
       title: 'Single Binary',
-      description: 'Written in Go, compiles to a single static binary. Install via go install, Homebrew, or download from GitHub Releases.',
+      description: 'Written in Go. All assets embedded. Install via go install, Homebrew, or download from GitHub Releases.',
     },
   ];
 
