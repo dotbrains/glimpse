@@ -103,8 +103,6 @@
           font-size="14" fill="#8b949e">→ Reviewing 8 files...</text>
     <text x="20" y="260" font-family="'SF Mono', Monaco, monospace"
           font-size="14" fill="#3fb950">✓ 5 comments posted</text>
-    <text x="20" y="295" font-family="'SF Mono', Monaco, monospace"
-          font-size="15" fill="#58a6ff" font-weight="500">$ glimpse resolve</text>
   </g>
 
   <!-- Bottom accent -->
