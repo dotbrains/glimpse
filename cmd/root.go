@@ -29,6 +29,8 @@ var (
 	flagNoOpen  bool
 	flagQuiet   bool
 	flagNew     bool
+	flagUnified bool
+	flagDark    bool
 )
 
 const defaultBasePort = 5391
@@ -54,10 +56,14 @@ func newRootCmd(version string) *cobra.Command {
 	root.Flags().BoolVar(&flagNoOpen, "no-open", false, "don't open browser")
 	root.Flags().BoolVar(&flagQuiet, "quiet", false, "minimal terminal output")
 	root.Flags().BoolVar(&flagNew, "new", false, "stop existing instance and start fresh")
+	root.Flags().BoolVar(&flagUnified, "unified", false, "unified view (default: split)")
+	root.Flags().BoolVar(&flagDark, "dark", true, "dark mode (use --dark=false for light)")
 
 	root.AddCommand(newListCmd())
 	root.AddCommand(newReviewCmd())
 	root.AddCommand(newResolveCmd())
+	root.AddCommand(newTreeCmd())
+	root.AddCommand(newResolveTreeCmd())
 	root.AddCommand(newConfigCmd())
 
 	return root
@@ -105,8 +111,8 @@ func runDiff(cmd *cobra.Command, args []string) error {
 		instance.StopByRepo(repoDir)
 	}
 
-	// Resolve refs.
-	base, compare := git.ResolveRefs(args, flagBase, flagCompare)
+	// Resolve refs (try natural language first).
+	base, compare, _ := git.ResolveNaturalOrRefs(args, flagBase, flagCompare)
 
 	// Get diff.
 	rawDiff, err := gc.Diff(ctx, base, compare)
@@ -131,12 +137,23 @@ func runDiff(cmd *cobra.Command, args []string) error {
 		displayBase = "working tree"
 	}
 
+	viewMode := "split"
+	if flagUnified {
+		viewMode = "unified"
+	}
+	theme := "dark"
+	if !flagDark {
+		theme = "light"
+	}
+
 	data := server.DiffData{
-		Repo:    repoName,
-		Base:    displayBase,
-		Compare: displayCompare,
-		Summary: diff.Summary(files),
-		Files:   files,
+		Repo:     repoName,
+		Base:     displayBase,
+		Compare:  displayCompare,
+		Summary:  diff.Summary(files),
+		Files:    files,
+		ViewMode: viewMode,
+		Theme:    theme,
 	}
 
 	// Pick port.
@@ -212,12 +229,26 @@ func runPRDiff(cmd *cobra.Command, prURL string) error {
 
 	files := diff.Parse(rawDiff)
 
+	viewMode := "split"
+	if flagUnified {
+		viewMode = "unified"
+	}
+	theme := "dark"
+	if !flagDark {
+		theme = "light"
+	}
+
 	data := server.DiffData{
-		Repo:    owner + "/" + repo,
-		Base:    prInfo.BaseRef,
-		Compare: prInfo.HeadRef,
-		Summary: fmt.Sprintf("PR #%d: %s — %s", prInfo.Number, prInfo.Title, diff.Summary(files)),
-		Files:   files,
+		Repo:     owner + "/" + repo,
+		Base:     prInfo.BaseRef,
+		Compare:  prInfo.HeadRef,
+		Summary:  fmt.Sprintf("PR #%d: %s — %s", prInfo.Number, prInfo.Title, diff.Summary(files)),
+		Files:    files,
+		ViewMode: viewMode,
+		Theme:    theme,
+		PROwner:  owner,
+		PRRepo:   repo,
+		PRNumber: number,
 	}
 
 	port := flagPort

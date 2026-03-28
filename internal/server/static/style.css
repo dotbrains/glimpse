@@ -54,3 +54,45 @@ nav a:hover{background:#21262d}
 .copy-all-bar{padding:8px 24px;background:#161b22;border-bottom:1px solid #30363d;display:flex;justify-content:flex-end;gap:8px}
 .copy-all-btn{background:#21262d;border:1px solid #30363d;color:#58a6ff;font-size:12px;padding:6px 14px;border-radius:6px;cursor:pointer;font-weight:500}
 .copy-all-btn:hover{background:#30363d;border-color:#58a6ff}
+.toggle-btn{background:#21262d;border:1px solid #30363d;color:#8b949e;font-size:11px;padding:4px 10px;border-radius:4px;cursor:pointer;margin-left:8px}
+.toggle-btn:hover{border-color:#58a6ff;color:#58a6ff}
+.toggle-btn.active{background:#388bfd;color:#fff;border-color:#388bfd}
+.gh-btn{background:#238636;border:1px solid #2ea043;color:#fff;font-size:11px;padding:4px 10px;border-radius:4px;cursor:pointer;margin-left:4px}
+.gh-btn:hover{background:#2ea043}
+.tree-layout{display:flex;height:calc(100vh - 56px)}
+#tree-sidebar{width:280px;min-width:280px;background:#161b22;border-right:1px solid #30363d;overflow-y:auto;padding:8px 0}
+#file-viewer{flex:1;overflow-y:auto}
+.tree-dir{padding:4px 12px;cursor:pointer;color:#e6edf3;font-size:13px}
+.tree-dir:hover{background:#21262d}
+.tree-file{padding:4px 12px 4px 24px;cursor:pointer;color:#8b949e;font-size:13px}
+.tree-file:hover{background:#21262d;color:#e6edf3}
+.tree-children{padding-left:12px}
+body.light{background:#fff;color:#1f2328}
+body.light header{background:#f6f8fa;border-color:#d0d7de}
+body.light .badge{background:#f6f8fa;border-color:#d0d7de;color:#656d76}
+body.light .badge.ref{color:#0969da}
+body.light h1{color:#0969da}
+body.light .summary{color:#656d76}
+body.light nav{background:#f6f8fa;border-color:#d0d7de}
+body.light nav a{color:#0969da}
+body.light nav a:hover{background:#eaeef2}
+body.light .file-card{border-color:#d0d7de}
+body.light .file-header{background:#f6f8fa;border-color:#d0d7de}
+body.light .file-header .path{color:#1f2328}
+body.light .diff-table .line-num{color:#656d76;border-color:#d0d7de}
+body.light .diff-table tr.added{background:rgba(63,185,80,0.1)}
+body.light .diff-table tr.added .line-content{color:#116329}
+body.light .diff-table tr.removed{background:rgba(248,81,73,0.1)}
+body.light .diff-table tr.removed .line-content{color:#82071e}
+body.light .diff-table tr.hunk-header{background:#f6f8fa}
+body.light .diff-table tr.hunk-header td{color:#0969da}
+body.light .empty{color:#656d76}
+body.light .comment-row{background:#f6f8fa;border-color:#d0d7de}
+body.light .comment-body{color:#1f2328}
+body.light #tree-sidebar{background:#f6f8fa;border-color:#d0d7de}
+body.light .tree-dir{color:#1f2328}
+body.light .tree-file{color:#656d76}
+body.light .tree-dir:hover,.tree-file:hover{background:#eaeef2}
+body.light .copy-all-bar{background:#f6f8fa;border-color:#d0d7de}
+body.light .toggle-btn{background:#f6f8fa;border-color:#d0d7de;color:#656d76}
+body.light .toggle-btn:hover{border-color:#0969da;color:#0969da}

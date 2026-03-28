@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>glimpse — tree</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header id="header">
+    <div class="header-left">
+      <h1>glimpse</h1>
+      <span id="repo-name" class="badge"></span>
+      <span class="badge ref">tree</span>
+    </div>
+    <div class="header-right">
+      <span id="file-count" class="summary"></span>
+    </div>
+  </header>
+  <div class="tree-layout">
+    <aside id="tree-sidebar"></aside>
+    <main id="file-viewer">
+      <div class="empty">Select a file to view.</div>
+    </main>
+  </div>
+  <script src="/tree.js"></script>
+</body>
+</html>

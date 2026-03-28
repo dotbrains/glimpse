@@ -124,6 +124,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     e.target.textContent = 'copied!';
     setTimeout(() => { e.target.textContent = 'copy'; }, 1500);
   });
+
+  // Theme toggle.
+  const theme = localStorage.getItem('glimpse-theme') || data.theme || 'dark';
+  if (theme === 'light') document.body.classList.add('light');
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    const current = document.body.classList.contains('light') ? 'light' : 'dark';
+    localStorage.setItem('glimpse-theme', current);
+  });
+
+  // View mode toggle (split ↔ unified) — reloads with different rendering.
+  const viewToggle = document.getElementById('view-toggle');
+  const viewMode = localStorage.getItem('glimpse-view') || data.viewMode || 'split';
+  if (viewMode === 'unified') viewToggle.textContent = 'split';
+  viewToggle.addEventListener('click', () => {
+    const next = viewToggle.textContent === 'unified' ? 'unified' : 'split';
+    localStorage.setItem('glimpse-view', next);
+    location.reload();
+  });
+
+  // PR push/pull buttons (only for PR diffs).
+  if (data.prOwner && data.prNumber) {
+    const prBtns = document.getElementById('pr-buttons');
+    const pushBtn = document.createElement('button');
+    pushBtn.className = 'gh-btn';
+    pushBtn.textContent = 'Push to GH';
+    pushBtn.addEventListener('click', async () => {
+      pushBtn.textContent = 'Pushing...';
+      const resp = await fetch('/api/gh/push', { method: 'POST' });
+      const r = await resp.json();
+      pushBtn.textContent = 'Pushed ' + (r.pushed || 0);
+      setTimeout(() => { pushBtn.textContent = 'Push to GH'; }, 3000);
+    });
+    prBtns.appendChild(pushBtn);
+
+    const pullBtn = document.createElement('button');
+    pullBtn.className = 'gh-btn';
+    pullBtn.textContent = 'Pull from GH';
+    pullBtn.addEventListener('click', async () => {
+      pullBtn.textContent = 'Pulling...';
+      const resp = await fetch('/api/gh/pull', { method: 'POST' });
+      const r = await resp.json();
+      pullBtn.textContent = 'Pulled ' + (r.pulled || 0);
+      setTimeout(() => { location.reload(); }, 1500);
+    });
+    prBtns.appendChild(pullBtn);
+  }
 });
 
 function fileStats(file) {

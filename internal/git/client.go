@@ -122,6 +122,32 @@ func (c *Client) RepoName(ctx context.Context) string {
 	return filepath.Base(top)
 }
 
+// ListFiles returns all tracked files in the repo at the given ref.
+func (c *Client) ListFiles(ctx context.Context, ref string) ([]string, error) {
+	if ref == "" {
+		ref = "HEAD"
+	}
+	out, err := c.run(ctx, "ls-tree", "-r", "--name-only", ref)
+	if err != nil {
+		return nil, err
+	}
+	var files []string
+	for _, line := range strings.Split(strings.TrimSpace(out), "\n") {
+		if line != "" {
+			files = append(files, line)
+		}
+	}
+	return files, nil
+}
+
+// ShowFile returns the contents of a file at the given ref.
+func (c *Client) ShowFile(ctx context.Context, ref, path string) (string, error) {
+	if ref == "" {
+		ref = "HEAD"
+	}
+	return c.run(ctx, "show", ref+":"+path)
+}
+
 // GitInstalled returns true if git is on PATH.
 func GitInstalled() bool {
 	_, err := exec.LookPath("git")

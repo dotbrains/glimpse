@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/dotbrains/glimpse/internal/comments"
 	gexec "github.com/dotbrains/glimpse/internal/exec"
 )
 
@@ -82,4 +83,96 @@ func (c *Client) FetchPRInfo(ctx context.Context, owner, repo, number string) (*
 	info.Repo = repo
 	info.RepoSlug = owner + "/" + repo
 	return &info, nil
+}
+
+// PRComment represents a GitHub PR review comment.
+type PRComment struct {
+	Path string `json:"path"`
+	Line int    `json:"line"`
+	Body string `json:"body"`
+	Side string `json:"side,omitempty"` // "RIGHT" or "LEFT"
+}
+
+// PostReviewComments posts comments as a PR review via gh api.
+func (c *Client) PostReviewComments(ctx context.Context, owner, repo, number string, cs []comments.Comment) error {
+	if len(cs) == 0 {
+		return nil
+	}
+
+	var ghComments []PRComment
+	for _, comment := range cs {
+		if comment.Resolved {
+			continue
+		}
+		side := "RIGHT"
+		if comment.Side == "old" {
+			side = "LEFT"
+		}
+		tag := ""
+		if comment.Severity != "" {
+			tag = "[" + comment.Severity + "] "
+		}
+		ghComments = append(ghComments, PRComment{
+			Path: comment.File,
+			Line: comment.Line,
+			Body: tag + comment.Body,
+			Side: side,
+		})
+	}
+
+	if len(ghComments) == 0 {
+		return nil
+	}
+
+	payload := map[string]interface{}{
+		"event":    "COMMENT",
+		"comments": ghComments,
+	}
+	data, _ := json.Marshal(payload)
+
+	_, err := c.Executor.RunWithStdin(ctx, string(data), "gh", "api",
+		"repos/"+owner+"/"+repo+"/pulls/"+number+"/reviews",
+		"--method", "POST", "--input", "-")
+	if err != nil {
+		return fmt.Errorf("posting PR review: %w", err)
+	}
+	return nil
+}
+
+// FetchPRComments fetches existing review comments from a PR.
+func (c *Client) FetchPRComments(ctx context.Context, owner, repo, number string) ([]comments.Comment, error) {
+	out, err := c.Executor.Run(ctx, "gh", "api",
+		"repos/"+owner+"/"+repo+"/pulls/"+number+"/comments",
+		"--jq", `.[] | {path: .path, line: (.line // .original_line), body: .body, side: .side}`)
+	if err != nil {
+		return nil, fmt.Errorf("fetching PR comments: %w", err)
+	}
+
+	var result []comments.Comment
+	for _, line := range strings.Split(strings.TrimSpace(out), "\n") {
+		if line == "" {
+			continue
+		}
+		var raw struct {
+			Path string `json:"path"`
+			Line int    `json:"line"`
+			Body string `json:"body"`
+			Side string `json:"side"`
+		}
+		if json.Unmarshal([]byte(line), &raw) != nil {
+			continue
+		}
+		side := "new"
+		if raw.Side == "LEFT" {
+			side = "old"
+		}
+		result = append(result, comments.Comment{
+			File:   raw.Path,
+			Line:   raw.Line,
+			Side:   side,
+			Body:   raw.Body,
+			Author: "github",
+		})
+	}
+	return result, nil
 }

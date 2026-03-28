@@ -27,7 +27,7 @@ func TestNewRootCmd(t *testing.T) {
 	for _, c := range root.Commands() {
 		cmds[c.Name()] = true
 	}
-	for _, want := range []string{"config", "list", "review", "resolve"} {
+	for _, want := range []string{"config", "list", "review", "resolve", "tree", "resolve-tree"} {
 		if !cmds[want] {
 			t.Errorf("missing subcommand %q", want)
 		}
@@ -112,6 +112,55 @@ func TestResolveCmd_Help(t *testing.T) {
 	}
 	if !strings.Contains(out.String(), "unresolved") {
 		t.Error("expected resolve help text")
+	}
+}
+
+func TestTreeCmd_Help(t *testing.T) {
+	root := newRootCmd("dev")
+	root.SetArgs([]string{"tree", "--help"})
+	var out bytes.Buffer
+	root.SetOut(&out)
+
+	err := root.Execute()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if !strings.Contains(out.String(), "file tree browser") {
+		t.Error("expected tree help text")
+	}
+}
+
+func TestResolveTreeCmd_Help(t *testing.T) {
+	root := newRootCmd("dev")
+	root.SetArgs([]string{"resolve-tree", "--help"})
+	var out bytes.Buffer
+	root.SetOut(&out)
+
+	err := root.Execute()
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if !strings.Contains(out.String(), "tree browser") {
+		t.Error("expected resolve-tree help text")
+	}
+}
+
+func TestRootCmd_HasUnifiedFlag(t *testing.T) {
+	root := newRootCmd("dev")
+	f := root.Flags().Lookup("unified")
+	if f == nil {
+		t.Error("missing --unified flag")
+	}
+}
+
+func TestRootCmd_HasDarkFlag(t *testing.T) {
+	root := newRootCmd("dev")
+	f := root.Flags().Lookup("dark")
+	if f == nil {
+		t.Error("missing --dark flag")
+	}
+	if f.DefValue != "true" {
+		t.Errorf("--dark default = %q, want true", f.DefValue)
 	}
 }
 
