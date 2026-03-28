@@ -243,3 +243,84 @@ func TestClient_RepoName(t *testing.T) {
 		t.Errorf("expected non-empty repo name, got %q", name)
 	}
 }
+
+func TestClient_ListFiles(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+
+	files, err := c.ListFiles(context.Background(), "HEAD")
+	if err != nil {
+		t.Fatalf("ListFiles error: %v", err)
+	}
+	if len(files) == 0 {
+		t.Error("expected at least one file")
+	}
+	found := false
+	for _, f := range files {
+		if f == "main.go" {
+			found = true
+		}
+	}
+	if !found {
+		t.Error("expected main.go in file list")
+	}
+}
+
+func TestClient_ShowFile(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+
+	content, err := c.ShowFile(context.Background(), "HEAD", "main.go")
+	if err != nil {
+		t.Fatalf("ShowFile error: %v", err)
+	}
+	if content == "" {
+		t.Error("expected non-empty file content")
+	}
+
+	_, err = c.ShowFile(context.Background(), "HEAD", "nonexistent.go")
+	if err == nil {
+		t.Error("expected error for nonexistent file")
+	}
+}
+
+func TestClient_DefaultBranch(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+
+	branch := c.DefaultBranch(context.Background())
+	if branch == "" {
+		t.Error("expected non-empty default branch")
+	}
+}
+
+func TestClient_Diff_WithRefs(t *testing.T) {
+	if !GitInstalled() {
+		t.Skip("git not installed")
+	}
+	repo := initTestRepo(t)
+	c := NewClient(repo)
+	ctx := context.Background()
+
+	// Add a second commit.
+	os.WriteFile(repo+"/second.go", []byte("package main\n"), 0o644)
+	exec.Command("git", "-C", repo, "add", ".").Run()
+	exec.Command("git", "-C", repo, "commit", "-m", "second").Run()
+
+	diff, err := c.Diff(ctx, "HEAD~1", "")
+	if err != nil {
+		t.Fatalf("Diff error: %v", err)
+	}
+	if diff == "" {
+		t.Error("expected non-empty diff between commits")
+	}
+}

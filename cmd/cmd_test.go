@@ -157,7 +157,7 @@ func TestRootCmd_HasDarkFlag(t *testing.T) {
 	root := newRootCmd("dev")
 	f := root.Flags().Lookup("dark")
 	if f == nil {
-		t.Error("missing --dark flag")
+		t.Fatal("missing --dark flag")
 	}
 	if f.DefValue != "true" {
 		t.Errorf("--dark default = %q, want true", f.DefValue)
