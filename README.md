@@ -14,6 +14,14 @@ go install github.com/dotbrains/glimpse@latest
 
 It works with Claude Code, Cursor, Codex, and any AI coding agent.
 
+| What can you do? | Description |
+|---|---|
+| [See your diffs](#see-your-diffs) | View changes in working area, across commits, branches, tags, etc |
+| [AI code review](#ai-code-review) | Let your agent review code and leave comments on the diff |
+| [Browse project files](#browse-project-files) | Explore your repo and comment on any file for AI to resolve |
+| [GitHub PRs](#github-prs) | Pull down a PR, review it locally, push comments back to GitHub |
+| [Multiple projects](#multiple-projects) | Run it in multiple repos at once, each gets its own port |
+
 ## See your diffs
 
 Run `glimpse` inside any git repo — your browser opens with a GitHub-style, syntax-highlighted diff.
